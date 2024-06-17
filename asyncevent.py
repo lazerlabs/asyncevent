@@ -37,6 +37,7 @@ class EventManager:
             self._events[event_name] = set()
         self._events[event_name].add(handler)
         print(f"Registered handler {handler} for event {event_name}")
+        print(f"->Event handlers: {self._events}\n")
 
     async def trigger_event(self, event_name: str, event_data: BaseEventData):
         handlers = self._events.get(event_name)
@@ -52,6 +53,8 @@ class EventManager:
         while True:
             handler, event_data = await self._event_queue.get()
             await handler(event_data)
+            print(f"Event queue: {self._event_queue}")
+            print(f"Event handlers: {self._events}")
         
 
 class Event:
